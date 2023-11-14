@@ -172,15 +172,29 @@ namespace ConsoleApp.Utils {
 			}
 		}
 
-		public static void NetherlandsFlagSort_1(int[] _arr) {
-			if (_arr == null || _arr.Length < 2) {
-				return;
+		/// <summary>
+		/// 计数排序
+		/// 适合小范围计数，且为自然数
+		/// </summary>
+		/// <param name="_arr"></param>
+		public static void CountingSort(int[] _arr) {
+			// 找出最大数
+			int max = int.MinValue;
+			foreach (int item in _arr) {
+				if (max > item) max = item;
 			}
-
-		}
-
-		private static void NetherlandsFlagSort_2(int[] _arr, int _L, int _R) {
-
+			// 空间换时间
+			int[] counter = new int[max];
+			foreach (int item in _arr) {
+				counter[item]++;
+			}
+			// 再从计数器中倒出
+			int index = 0;
+			for (int cIndex = 0; cIndex < counter.Length; cIndex++) {
+				for (int i = 0; i < counter[cIndex]; i++) {
+					_arr[index++] = cIndex;
+				}
+			}
 		}
 	}
 }
