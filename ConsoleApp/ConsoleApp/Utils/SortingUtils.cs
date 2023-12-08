@@ -177,16 +177,16 @@ namespace ConsoleApp.Utils {
 		/// 适合小范围计数，且为自然数
 		/// </summary>
 		/// <param name="_arr"></param>
-		public static void CountingSort(int[] _arr, int _L, int _R) {
+		public static void CountingSort(int[] _arr) {
 			// 找出最大数
 			int max = int.MinValue;
-			for (int i = _L; i < _R; i++) {
-				if (max > _arr[i]) max = _arr[i];
+			foreach (int item in _arr) {
+				if (max > item) max = item;
 			}
 			// 空间换时间
-			int[] counter = new int[max + 1];
-			for (int i = _L; i < _R; i++) {
-				counter[_arr[i]]++;
+			int[] counter = new int[max];
+			foreach (int item in _arr) {
+				counter[item]++;
 			}
 			// 再从计数器中倒出
 			int index = 0;
@@ -195,14 +195,6 @@ namespace ConsoleApp.Utils {
 					_arr[index++] = cIndex;
 				}
 			}
-		}
-
-		/// <summary>
-		/// 基数排序
-		/// </summary>
-		/// <param name="_arr"></param>
-		public static void RadixSort(int[] _arr) {
-
 		}
 	}
 }
