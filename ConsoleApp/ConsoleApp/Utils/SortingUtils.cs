@@ -177,21 +177,25 @@ namespace ConsoleApp.Utils {
 		/// 适合小范围计数，且为自然数
 		/// </summary>
 		/// <param name="_arr"></param>
-		public static void CountingSort(int[] _arr) {
+		/// <param name="_L"></param>
+		/// <param name="_R"></param>
+		public static void CountingSort(int[] _arr, int _L, int _R) {
 			// 找出最大数
 			int max = int.MinValue;
-			foreach (int item in _arr) {
-				if (max > item) max = item;
+			for (int i = _L; i < _R; i++) {
+				if (max > _arr[i]) max = _arr[i];
 			}
 			// 空间换时间
-			int[] counter = new int[max];
-			foreach (int item in _arr) {
-				counter[item]++;
+			int[] counter = new int[max + 1];
+			for (int i = _L; i < _R; i++) {
+				counter[_arr[i]]++;
 			}
 			// 再从计数器中倒出
-			int index = 0;
+			int index = _L;
 			for (int cIndex = 0; cIndex < counter.Length; cIndex++) {
+				// 有多少哥桶
 				for (int i = 0; i < counter[cIndex]; i++) {
+					// 每个桶里有多少个数
 					_arr[index++] = cIndex;
 				}
 			}
