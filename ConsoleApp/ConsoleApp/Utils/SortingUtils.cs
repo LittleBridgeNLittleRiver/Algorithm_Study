@@ -200,5 +200,53 @@ namespace ConsoleApp.Utils {
 				}
 			}
 		}
+
+		/// <summary>
+		/// 获取位数
+		/// </summary>
+		/// <param name="num"></param>
+		/// <param name="system">进制系统/多少进制</param>
+		/// <returns></returns>
+		public static int GetDigit(int num, int system) {
+			int digit = 0;
+			while(num > 0) {
+				digit++;
+				num /= system;
+			}
+			return digit;
+		}
+
+		/// <summary>
+		/// 基数排序
+		/// </summary>
+		/// <param name="_arr"></param>
+		/// <param name="_L"></param>
+		/// <param name="_R"></param>
+		/// <param name="system">进制系统/多少进制</param>
+		public static void RadixSort(int[] _arr, int _L, int _R, int system) {
+			if (_arr == null || _arr.Length < 2) {
+				return;
+			}
+			int maxDigit = int.MinValue;
+			foreach (int num in _arr) {
+				int digit = GetDigit(num, system);
+				if (digit > maxDigit) {
+					maxDigit = digit;
+				}
+			}
+			RadixSort(_arr, _L, _R, system, maxDigit);
+		}
+
+		/// <summary>
+		/// 基数排序
+		/// </summary>
+		/// <param name="_arr"></param>
+		/// <param name="_L"></param>
+		/// <param name="_R"></param>
+		/// <param name="system"></param>
+		/// <param name="digit">进制系统/多少进制</param>
+		public static void RadixSort(int[] _arr, int _L, int _R, int system, int digit) {
+
+		}
 	}
 }
