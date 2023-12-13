@@ -36,7 +36,7 @@ namespace ConsoleApp.Utils {
 			if (_L == _R) {
 				return _arr[_L];
 			}
-			int mid = _L + ((_R - _L) >> 1);    // 【重点】
+			int mid = _L + ((_R - _L) >> 1);    // 中点位置【重点】
 			int leftMax = GetMax(_arr, _L, mid);
 			int rightMax = GetMax(_arr, mid + 1, _R);
 			return Math.Max(leftMax, rightMax);
@@ -171,6 +171,37 @@ namespace ConsoleApp.Utils {
 					i++;
 				}
 			}
+		}
+
+		/// <summary>
+		/// 获取位数
+		/// </summary>
+		/// <param name="num"></param>
+		/// <param name="system">进制系统/多少进制</param>
+		/// <returns></returns>
+		public static int GetNumOfDigits(int num, int system) {
+			int digits = 0;
+			while (num > 0) {
+				digits++;
+				num /= system;
+			}
+			return digits;
+		}
+
+
+		/// <summary>
+		/// 获取某一位数的值
+		/// </summary>
+		/// <param name="num"></param>
+		/// <param name="system">进制系统/多少进制</param>
+		/// <param name="dight">第几位</param>
+		/// <returns></returns>
+		public static int GetDigit(int num, int dight, int system = 10) {
+			for (int i = 1; i < dight; i++) {
+				num /= system;
+			}
+			num %= system;
+			return num;
 		}
 	}
 }

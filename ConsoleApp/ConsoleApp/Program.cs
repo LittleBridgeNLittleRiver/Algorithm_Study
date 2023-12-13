@@ -28,11 +28,13 @@ int[] arr = new int[] { 5,1,2,6,3,1,4,5,7,1,2,1,4 };
 //int a = 1;
 //arr[++a] = 3;
 
-Heap heap = new Heap(arr);
+//Heap heap = new Heap(arr);
 //heap.Change(5, 8);
 //int[] b = new int[arr.Length];
 //arr.CopyTo(b, 0);
-int[]? a = heap.GetSortingArray();
+//int[]? a = heap.GetSortingArray();
+
+SortingUtils.RadixSort(arr);
 
 Console.WriteLine();
 

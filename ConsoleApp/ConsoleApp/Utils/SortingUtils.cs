@@ -201,19 +201,8 @@ namespace ConsoleApp.Utils {
 			}
 		}
 
-		/// <summary>
-		/// 获取位数
-		/// </summary>
-		/// <param name="num"></param>
-		/// <param name="system">进制系统/多少进制</param>
-		/// <returns></returns>
-		public static int GetDigit(int num, int system) {
-			int digit = 0;
-			while(num > 0) {
-				digit++;
-				num /= system;
-			}
-			return digit;
+		public static void RadixSort(int[] _arr, int system = 10) {
+			RadixSort(_arr, 0, _arr.Length - 1, system);
 		}
 
 		/// <summary>
@@ -223,13 +212,13 @@ namespace ConsoleApp.Utils {
 		/// <param name="_L"></param>
 		/// <param name="_R"></param>
 		/// <param name="system">进制系统/多少进制</param>
-		public static void RadixSort(int[] _arr, int _L, int _R, int system) {
+		public static void RadixSort(int[] _arr, int _L, int _R, int system = 10) {
 			if (_arr == null || _arr.Length < 2) {
 				return;
 			}
 			int maxDigit = int.MinValue;
 			foreach (int num in _arr) {
-				int digit = GetDigit(num, system);
+				int digit = CommonUtils.GetNumOfDigits(num, system);
 				if (digit > maxDigit) {
 					maxDigit = digit;
 				}
@@ -244,9 +233,33 @@ namespace ConsoleApp.Utils {
 		/// <param name="_L"></param>
 		/// <param name="_R"></param>
 		/// <param name="system"></param>
-		/// <param name="digit">进制系统/多少进制</param>
-		public static void RadixSort(int[] _arr, int _L, int _R, int system, int digit) {
-
+		/// <param name="digits">进制系统/多少进制</param>
+		public static void RadixSort(int[] _arr, int _L, int _R, int system, int digits) {
+			// 多少个数，就准备多大的桶
+			int[] bucket = new int[_R - _L + 1];
+			// 根据最高位数，循环数次
+			for (int d1 = 1; d1 <= digits; d1++) {
+				// 多少进制，就创建多大的累计数组
+				int[] count = new int[system];
+				for (int i = _L; i <= _R; i++) {
+					int digit = CommonUtils.GetDigit(_arr[i], d1, system);
+					count[digit]++;
+				}
+				// 由小到大，累计数堆叠
+				for (int d2 = 0; d2 < system - 1; d2++) {
+					count[d2 + 1] += count[d2];
+				}
+				// 将数字装入桶中
+				for (int i = _R; i >= _L; i--) {
+					int digit = CommonUtils.GetDigit(_arr[i], d1, system);
+					bucket[count[digit] - 1] = _arr[i];
+					count[digit]--;
+				}
+				// 将桶中的数重新倒回去
+				for (int i = _L; i <= _R; i++) {
+					_arr[i] = bucket[i];
+				}
+			}
 		}
 	}
 }
