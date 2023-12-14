@@ -216,14 +216,13 @@ namespace ConsoleApp.Utils {
 			if (_arr == null || _arr.Length < 2) {
 				return;
 			}
-			int maxDigit = int.MinValue;
+			// 筛选出最大值，计算其位数
+			int max = int.MinValue;
 			foreach (int num in _arr) {
-				int digit = CommonUtils.GetNumOfDigits(num, system);
-				if (digit > maxDigit) {
-					maxDigit = digit;
-				}
+				if (num > max) max = num;
 			}
-			RadixSort(_arr, _L, _R, system, maxDigit);
+			int digit = CommonUtils.GetNumOfDigits(max, system);
+			RadixSort(_arr, _L, _R, system, digit);
 		}
 
 		/// <summary>
