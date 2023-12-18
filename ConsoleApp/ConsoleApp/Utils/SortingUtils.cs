@@ -262,3 +262,16 @@ namespace ConsoleApp.Utils {
 		}
 	}
 }
+
+/**
+ *					时间			空间			稳定性
+ * 选择排序			lg(N²)		lg(1)		无
+ * 冒泡排序			lg(N²)		lg(1)		有
+ * 插入排序			lg(N²)		lg(1)		有
+ * 归并排序			lg(NlogN)	lg(N²)		无
+ * 快速排序(随机)		lg(NlogN)	lg(NlogN)	无
+ * 堆排序			lg(NlogN)	lg(1)		无
+ * 桶排序(计/基数)	lg(1)		lg(N)		有
+ * 
+ * Sp:不在意稳定性时，优先使用快速排序
+**/
