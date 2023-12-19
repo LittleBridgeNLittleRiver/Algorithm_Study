@@ -268,8 +268,8 @@ namespace ConsoleApp.Utils {
  * 选择排序			lg(N²)		lg(1)		无
  * 冒泡排序			lg(N²)		lg(1)		有
  * 插入排序			lg(N²)		lg(1)		有
- * 归并排序			lg(NlogN)	lg(N²)		无
- * 快速排序(随机)		lg(NlogN)	lg(NlogN)	无
+ * 归并排序			lg(NlogN)	lg(N)		无
+ * 快速排序(随机)		lg(NlogN)	lg(logN)	无
  * 堆排序			lg(NlogN)	lg(1)		无
  * 桶排序(计/基数)	lg(1)		lg(N)		有
  * 
