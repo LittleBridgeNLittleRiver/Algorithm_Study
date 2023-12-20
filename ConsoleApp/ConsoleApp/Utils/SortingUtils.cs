@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +53,24 @@ namespace ConsoleApp.Utils {
 		/// <param name="_arr"></param>
 		/// <param name="_accending"></param>
 		public static void InsertSort(int[] _arr, bool _accending = true) {
-			for (int i = 1; i < _arr.Length; i++) {
+			if (_arr == null || _arr.Length < 2) {
+				return;
+			}
+			InsertSort(_arr, 0, _arr.Length - 1, _accending);
+		}
+
+		/// <summary>
+		/// 插入排序
+		/// </summary>
+		/// <param name="_arr"></param>
+		/// <param name="_L"></param>
+		/// <param name="_R"></param>
+		/// <param name="_accending"></param>
+		public static void InsertSort(int[] _arr, int _L, int _R, bool _accending = true) {
+			if (_R >= _L) {
+				return;
+			}
+			for (int i = _L + 1; i < _R; i++) {
 				int insertPos = i;
 				for (int j = i - 1; j >= 0; j--) {
 					bool accend = _arr[j] > _arr[j + 1];
@@ -126,7 +144,7 @@ namespace ConsoleApp.Utils {
 		}
 
 		/// <summary>
-		/// 
+		/// 荷兰国旗
 		/// </summary>
 		/// <param name="_arr"></param>
 		/// <param name="_L"></param>
@@ -151,6 +169,7 @@ namespace ConsoleApp.Utils {
 			return (lessIndex, greaterIndex + 1);
 		}
 
+
 		/// <summary>
 		/// 随即快排（快排3.0）
 		/// </summary>
@@ -159,17 +178,29 @@ namespace ConsoleApp.Utils {
 			if (_arr == null || _arr.Length < 2) {
 				return;
 			}
-			var random = new Random();
-			RandomizedQuickSort(random, _arr, 0, _arr.Length - 1);
+			RandomizedQuickSort(_arr, 0, _arr.Length - 1);
 		}
 
-		private static void RandomizedQuickSort(Random random, int[] _arr, int _L, int _R) {
-			if (_L <= _R) {
-				CommonUtils.Swap(_arr, random.Next(_L, _R), _R);
-				(int, int) boundary = QuickSort_Three_Partition(_arr, _L, _R);
-				QuickSort_2(_arr, _L, boundary.Item1);
-				QuickSort_2(_arr, boundary.Item2, _R);
+		/// <summary>
+		/// 随即快排（快排3.0）
+		/// </summary>
+		/// <param name="_arr"></param>
+		/// <param name="_L"></param>
+		/// <param name="_R"></param>
+		public static void RandomizedQuickSort(int[] _arr, int _L, int _R) {
+			if (_R >= _L) {
+				return;
 			}
+			if (_R - _L < 60) {
+				// 如果基数较小，可采取时间复杂度更小的插入排序
+				InsertSort(_arr, _L, _R);
+				return;
+			}
+			var random = new Random();
+			CommonUtils.Swap(_arr, random.Next(_L, _R), _R);
+			(int, int) boundary = QuickSort_Three_Partition(_arr, _L, _R);
+			QuickSort_2(_arr, _L, boundary.Item1);
+			QuickSort_2(_arr, boundary.Item2, _R);
 		}
 
 		/// <summary>
@@ -265,13 +296,25 @@ namespace ConsoleApp.Utils {
 
 /**
  *					时间			空间			稳定性
- * 选择排序			lg(N²)		lg(1)		无
- * 冒泡排序			lg(N²)		lg(1)		有
- * 插入排序			lg(N²)		lg(1)		有
- * 归并排序			lg(NlogN)	lg(N)		无
- * 快速排序(随机)		lg(NlogN)	lg(logN)	无
- * 堆排序			lg(NlogN)	lg(1)		无
- * 桶排序(计/基数)	lg(1)		lg(N)		有
+ * 选择排序			O(N²)		O(1)		无
+ * 冒泡排序			O(N²)		O(1)		有
+ * 插入排序			O(N²)		O(1)		有
+ * 归并排序			O(NlogN)	O(N)		无
+ * 快速排序(随机)		O(NlogN)	O(logN)	无
+ * 堆排序			O(NlogN)	O(1)		无
+ * 桶排序(计/基数)	O(1)		O(N)		有
  * 
- * Sp:不在意稳定性时，优先使用快速排序
+ * Sp: 不在意稳定性时，优先使用快速排序
 **/
+
+/**
+ * 排序选择的考量：
+ * ①时间复杂度O(N²)与O(NlogN)；
+ * ②稳定性；
+ */
+
+/**
+ *			时间
+ * 哈希表	O(1)
+ * 有序表	O(logN)
+ */
